@@ -1,5 +1,4 @@
 CREATE TABLE public.staging_movies (
-	movieid int IDENTITY(1, 1),
 	title varchar,
 	rating float,
 	year int,
@@ -10,7 +9,7 @@ CREATE TABLE public.staging_movies (
     votes int,
     content varchar,
     budget int,
-	PRIMARY KEY (movieid)
+	PRIMARY KEY (title)
 );
 
 
@@ -28,36 +27,21 @@ CREATE TABLE public.staging_director (
 
 
 CREATE TABLE public.movies_decade (
-	movieid int IDENTITY(1, 1),
 	title varchar,
 	rating float,
 	year int,
     duration int,
     director varchar,
 	genres varchar,
-	PRIMARY KEY (movieid)
-);
-
-
-
-CREATE TABLE public.movies_decade (
-	movieid int IDENTITY(1, 1),
-	title varchar,
-	rating float,
-	year varchar,
-    duration int,
-    director varchar,
-	genres varchar,
-	PRIMARY KEY (movieid)
+	PRIMARY KEY (title)
 );
 
 
 CREATE TABLE public.top_ten_movies (
-	movieid int IDENTITY(1, 1),
 	year int,
 	title varchar,
 	rating float,
-	PRIMARY KEY (movieid)
+	PRIMARY KEY (title)
 )
 
 CREATE TABLE public.movies_list (
