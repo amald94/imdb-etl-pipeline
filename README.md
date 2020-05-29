@@ -53,3 +53,20 @@ Access the server http://localhost:8080
 
 ![imgs/flow1](images/dags2.png)
 
+
+
+
+## Scenarios
+
+-   Data increase by 100x. read > write. write > read
+    
+    -   Redshift: Analytical database, optimized for aggregation, also good performance for read-heavy workloads
+    -   Increase EMR cluster size to handle bigger volume of data
+
+-   Pipelines would be run on 7am daily. would it still work?
+    
+    -   DAG is scheduled to run every 1 hour and can be configured to run every morning at 7 AM if required. 
+    
+-   Make it available to 100+ people
+    -   We can set the concurrency limit for your Amazon Redshift cluster. While the concurrency limit is 50 parallel queries for a single period of time, this is on a per cluster basis, meaning you can launch as many clusters as fit for you business.
+ 
