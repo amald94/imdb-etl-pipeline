@@ -25,3 +25,31 @@ Redshift:
 
     Redshift 2 Node cluster with Instance Types `dc2.large`  
     
+## Execute
+
+1. Install Airflow, create variable AIRFLOW_HOME and AIRFLOW_CONFIG with the appropiate paths, and place dags and plugins on airflor_home directory.
+2. Initialize Airflow data base with airflow initdb, and open webserver with airflow webserver
+Access the server http://localhost:8080 
+3. Create AWS Connection & Redshift Connection as follows
+
+**AWS Connection**<br><br>
+<b>Conn Id :</b> Enter aws_credentials. <br>
+<b>Conn Type :</b> Enter Amazon Web Services. <br>
+<b>Login :</b> Enter your Access key ID from the IAM User credentials you downloaded earlier. <br>
+<b>Password :</b> Enter your Secret access key from the IAM User credentials you downloaded earlier. <br><br>
+
+**Redshift Connection**<br><br>
+<b>Conn Id :</b> Enter redshift. <br>
+<b>Conn Type :</b> Enter Postgres. <br>
+<b>Host :</b> Enter the endpoint of your Redshift cluster, excluding the port at the end.  <br>
+<b>Schema :</b> This is the Redshift database you want to connect to. <br>
+<b>Login :</b> Enter awsuser. <br>
+<b>Password :</b> Enter the password created when launching the Redshift cluster. <br>
+<b>Port :</b> Enter 5439. <br>
+
+* Task dependencies are set as following:
+
+![imgs/flow1](images/dags.png)
+
+![imgs/flow1](images/dags2.png)
+
