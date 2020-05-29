@@ -12,6 +12,8 @@ from airflow.models import Variable
 # AWS_SECRET = os.environ.get('AWS_SECRET')
 
 s3_bucket = 'moviedb-etl'
+input_data = 'input'
+output_data = 'processed'
 
 default_args = {
     'owner': 'Amal Das',
@@ -37,7 +39,8 @@ start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 get_movie_details = GetMovieDetails(
     task_id="prepare_data",
     dag=dag,
-    dataset="dataset/movie_metadata.csv"
+    s3_bucket = s3_bucket,
+    s3_key = input_data,
 )
 
 stage_movies_to_redshift = StageToRedshiftOperator(

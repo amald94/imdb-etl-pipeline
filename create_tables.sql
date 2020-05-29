@@ -59,7 +59,6 @@ CREATE TABLE public.movies_list (
 );
 
 
-
 CREATE TABLE public.director_table (
 	directorid int IDENTITY(1, 1),
 	director_name varchar,

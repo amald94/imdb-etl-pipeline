@@ -15,19 +15,25 @@ class GetMovieDetails(BaseOperator):
 
     @apply_defaults
     def __init__(self,
-                 dataset="",
+                 s3_bucket="",
+                 s3_key = "",
                  *args, **kwargs):
 
         super(GetMovieDetails, self).__init__(*args, **kwargs)
-        self.dataset = dataset
+        self.s3_bucket = s3_bucket
+        self.s3_key = s3_key
 
     def execute(self, context):
         self.log.info('Getting the movie detials')
-        spark = SparkSession.builder.appName('Basics')\
+        spark = SparkSession.builder.appName('moviedb-etl')\
+                .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:2.7.0") \
                 .getOrCreate()
-            
+
+        #path
+        s3_path = "s3://{}".format(self.s3_bucket)
+        s3_path = s3_path + '/' + self.s3_key
         #read the dataset
-        df = spark.read.csv(self.dataset,
+        df = spark.read.csv(s3_path,
                    header=True)
         
         ## Prepare movie and director tables
@@ -49,9 +55,13 @@ class GetMovieDetails(BaseOperator):
         director_table.select([count(when(isnan(c), c)).alias(c) for c in director_table.columns]).show()
         movie_table.select([count(when(isnan(c), c)).alias(c) for c in movie_table.columns]).show()
 
-        # write the generated dataframe back to s3 in parquet format
-        movie_table.write.csv("movie.csv",mode="overwrite")
-        director_table.write.csv("director.csv",mode="overwrite")
+        # write the generated dataframe back to s3
+        s3_processed = "s3://{}".format(self.s3_bucket)
+        s3_processed = s3_processed + '/' + 'processed'
+        s3_movies = s3_processed + '/' + 'movies.csv'
+        s3_direcor = s3_processed + '/' + 'director.csv'
+        movie_table.write.csv(s3_movies,mode="overwrite")
+        director_table.write.csv(s3_direcor,mode="overwrite")
 
 
 
