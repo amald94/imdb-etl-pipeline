@@ -25,6 +25,21 @@ Redshift:
 
     Redshift 2 Node cluster with Instance Types `dc2.large`  
     
+
+## Datasets
+
+You'll be working with two datasets that reside in S3. Here are the S3 links for each:
+
+* <b> Input </b> - s3://moviedb-etl/input
+* <b> Processed data </b> - s3://moviedb-etl/processed
+
+#### Structure
+* <b> /images </b> - some screenshots.
+* <b> /dags </b> - folder containing dags.
+* <b> /plugins </b> - folder containing etl scripts and custom operators. 
+* <b> /dataset </b> - folder containing sample dataset.
+
+    
 ## Execute
 
 1. Install Airflow, create variable AIRFLOW_HOME and AIRFLOW_CONFIG with the appropiate paths, and place dags and plugins on airflor_home directory.
@@ -53,7 +68,27 @@ Access the server http://localhost:8080
 
 ![imgs/flow1](images/dags2.png)
 
+## Schema
 
+movies_list - records in dataset associated with main movie details. Columns for the table:
+
+    title, rating, year, duration, director, gross, genres, votes, content, budget
+    
+director_list - records in dataset associated with director and movie details. Columns for the table:
+
+    directorid, director_name, gross, genres, movie_title, content_rating, budget, rating
+    
+top_ten_movies - a table containing top 10 movies of each year based on the rating
+
+    year, title, rating
+    
+movies_decade - a table containing top movies of last decade.
+
+    year, title, rating, duration, director, genres
+    
+top_gross_films - a table containing top gross movies of each director in each content rating.
+
+    director_name, profit, content_rating
 
 
 ## Scenarios
